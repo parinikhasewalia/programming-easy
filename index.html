@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Expense Tracker</title>
+
+    <style>
+
+        body {
+            font-family: Arial;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 400px;
+            margin: 50px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px #ccc;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        h2 {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        ul {
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+            background-color: #eee;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 5px;
+        }
+
+        .delete-button {
+            background-color: #f44336;
+            margin-top: 8px;
+        }
+
+        .delete-button:hover {
+            background-color: #d32f2f;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Expense Tracker</h1>
+
+        <input
+            type="text"
+            id="name"
+            placeholder="Expense Name"
+        >
+
+        <input
+            type="number"
+            id="amount"
+            placeholder="Amount"
+        >
+
+        <select id="category">
+
+            <option>Food</option>
+            <option>Travel</option>
+            <option>Shopping</option>
+            <option>Education</option>
+            <option>Bills</option>
+            <option>Other</option>
+
+        </select>
+
+        <button onclick="addExpense()">
+            Add Expense
+        </button>
+
+        <h2>
+            Total: ₹<span id="total">0</span>
+        </h2>
+
+        <ul id="expenseList"></ul>
+
+    </div>
+
+
+    <script>
+
+        // Stores the total amount
+        let total = 0;
+
+
+        // Function to add a new expense
+        function addExpense() {
+
+            let name = document.getElementById("name").value;
+
+            let amount = document.getElementById("amount").value;
+
+            let category = document.getElementById("category").value;
+
+
+            // Check whether name and amount are entered
+            if (name == "" || amount == "") {
+
+                alert("Please enter all details");
+
+                return;
+            }
+
+
+            // Get the expense list
+            let list = document.getElementById("expenseList");
+
+
+            // Create a new list item
+            let item = document.createElement("li");
+
+
+            // Add expense information
+            item.innerHTML =
+                name + " - ₹" + amount +
+                " (" + category + ")" +
+                "<br>" +
+                "<button class='delete-button' onclick='deleteExpense(this, " +
+                amount + ")'>Delete</button>";
+
+
+            // Add the expense to the list
+            list.appendChild(item);
+
+
+            // Add amount to total
+            total = total + Number(amount);
+
+
+            // Display updated total
+            document.getElementById("total").innerText = total;
+
+
+            // Clear input fields
+            document.getElementById("name").value = "";
+
+            document.getElementById("amount").value = "";
+
+        }
+
+
+        // Function to delete an expense
+        function deleteExpense(button, amount) {
+
+            // Remove the expense from the list
+            button.parentElement.remove();
+
+
+            // Subtract the amount from total
+            total = total - Number(amount);
+
+
+            // Display updated total
+            document.getElementById("total").innerText = total;
+
+        }
+
+    </script>
+
+</body>
+</html>
